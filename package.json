@@ -2,9 +2,8 @@
   "name": "digital-literacy-trainer-bot",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.js",
   "type": "module",
-  "env": "NODE_ENV",
   "scripts": {
     "start:dev": "nodemon main.js"
   },

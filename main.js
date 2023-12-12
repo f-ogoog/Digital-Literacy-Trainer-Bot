@@ -1,14 +1,29 @@
-import {Telegraf} from "telegraf";
-import {message} from "telegraf/filters";
+import {Markup, Scenes, session, Telegraf} from "telegraf";
 import 'dotenv/config';
+import { themesScene } from "./themesScene.js";
+import {subtopicsScene} from "./subtopicsScene.js";
+import {subtopicScene} from "./subtopicScene.js";
+
+const stage = new Scenes.Stage([themesScene, subtopicsScene, subtopicScene])
 
 const bot = new Telegraf(process.env.BOT_TOKEN)
-bot.start((ctx) => ctx.reply('Welcome'))
-bot.help((ctx) => ctx.reply('Send me a sticker'))
-bot.on(message('sticker'), (ctx) => ctx.reply('👍'))
-bot.hears('hi', (ctx) => ctx.reply('Hey there'))
-bot.launch()
+bot.use(session())
+bot.use(stage.middleware());
 
-// Enable graceful stop
-process.once('SIGINT', () => bot.stop('SIGINT'))
-process.once('SIGTERM', () => bot.stop('SIGTERM'))
+bot.start(async (ctx) => {
+  const text = `Для початку навчання, або перевірки ваших знань з цифровій грамотності, натисність:
+  👉🏻 Обрати тему                                            
+  👉🏻Пройти тестуванн`;
+  console.log(session.index);
+  await ctx.reply(text, Markup.inlineKeyboard([
+    Markup.button.callback('Обрати тему', 'themes'),
+    Markup.button.callback('Пройти тестування', 'test'),
+  ]).oneTime().resize());
+})
+
+bot.action('themes', async (ctx) => {
+  await ctx.answerCbQuery();
+  await ctx.scene.enter('themes');
+})
+
+bot.launch()

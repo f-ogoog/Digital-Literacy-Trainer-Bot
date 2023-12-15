@@ -1,6 +1,6 @@
 export const themes = [
   {
-    title: 'title',
+    title: 'Інтернет та безпека в мережі',
     text: 'text',
     subtopics: [
       {
@@ -8,8 +8,8 @@ export const themes = [
         text: 'text1',
       },
       {
-       subtopic: 'subtopic2',
-       text: 'text2',
+        subtopic: 'subtopic2',
+        text: 'text2',
       }
     ]
   }

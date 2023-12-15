@@ -14,7 +14,6 @@ bot.start(async (ctx) => {
   const text = `Для початку навчання, або перевірки ваших знань з цифровій грамотності, натисність:
   👉🏻 Обрати тему                                            
   👉🏻Пройти тестуванн`;
-  console.log(session.index);
   await ctx.reply(text, Markup.inlineKeyboard([
     Markup.button.callback('Обрати тему', 'themes'),
     Markup.button.callback('Пройти тестування', 'test'),
@@ -22,6 +21,11 @@ bot.start(async (ctx) => {
 })
 
 bot.action('themes', async (ctx) => {
+  await ctx.answerCbQuery();
+  await ctx.scene.enter('themes');
+})
+
+bot.action('test', async (ctx) => {
   await ctx.answerCbQuery();
   await ctx.scene.enter('themes');
 })

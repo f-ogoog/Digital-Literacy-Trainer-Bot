@@ -1,5 +1,5 @@
-import {Scenes, Markup, session} from "telegraf";
-import { themes } from "./themes.js";
+import { Scenes, Markup, session } from 'telegraf';
+import { themes } from './themes.js';
 
 export const subtopicsScene= new Scenes.BaseScene('subtopics');
 
@@ -23,8 +23,8 @@ subtopicsScene.hears('Пройти тестування', async (ctx) => {
 subtopicsScene.on('text', async (ctx) => {
   const index = session.index;
   const subtopic_index = +ctx.message.text;
-  if (isNaN(subtopic_index) || subtopic_index < 1 || subtopic_index > themes[index-1].subtopics.length) {
-    ctx.reply('Пішов нахуй розбійник');
+  if (!Number.isInteger(subtopic_index) || subtopic_index < 1 || subtopic_index > themes[index-1].subtopics.length) {
+    ctx.reply('Введіть коректні дані');
   } else {
     session.subtopic_index = subtopic_index;
     await ctx.scene.enter('subtopic');

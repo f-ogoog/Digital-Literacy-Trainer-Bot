@@ -1,10 +1,10 @@
 import {Markup, Scenes, session, Telegraf} from "telegraf";
 import 'dotenv/config';
-import { themesScene } from "./themesScene.js";
-import {subtopicsScene} from "./subtopicsScene.js";
-import {subtopicScene} from "./subtopicScene.js";
-import {testsScene} from "./testsScene.js";
-import {testScene} from "./testScene.js";
+import { themesScene } from './themesScene.js';
+import { subtopicsScene } from './subtopicsScene.js';
+import { subtopicScene } from './subtopicScene.js';
+import { testsScene } from './testsScene.js';
+import { testScene } from './testScene.js';
 
 const stage = new Scenes.Stage([themesScene, subtopicsScene, subtopicScene, testsScene, testScene]);
 

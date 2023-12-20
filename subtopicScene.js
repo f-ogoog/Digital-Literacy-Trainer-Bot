@@ -1,5 +1,5 @@
-import {Scenes, Markup, session} from "telegraf";
-import { themes } from "./themes.js";
+import { Scenes, Markup, session } from 'telegraf';
+import { themes } from './themes.js';
 
 export const subtopicScene= new Scenes.BaseScene('subtopic');
 

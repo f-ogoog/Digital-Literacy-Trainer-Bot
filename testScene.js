@@ -1,5 +1,5 @@
-import {Markup, Scenes, session} from "telegraf";
-import {themes} from "./themes.js";
+import { Markup, Scenes, session } from 'telegraf';
+import { themes } from './themes.js';
 
 export const testScene = new Scenes.BaseScene('test');
 
@@ -22,14 +22,14 @@ testScene.on('text',async (ctx) => {
   const answer = themes[theme].test[test].answer;
 
   if (text === answer) {
-    ctx.reply('🟩 Правильна відповідь');
+    await ctx.reply('🟩 Правильна відповідь');
     session.correctAnswersCount += 1;
     await ctx.scene.enter('tests');
   } else if (['A', 'B', 'C'].includes(text)) {
-    ctx.reply(`🟥 Не правильна відповідь;
+    await ctx.reply(`🟥 Не правильна відповідь;
        Правильна: ${answer}`);
     await ctx.scene.enter('tests');
   } else {
-    await ctx.reply('Пішов нахуй розбійниу')
+    await ctx.reply('Введіть коректні дані')
   }
 });

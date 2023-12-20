@@ -1,6 +1,6 @@
-import {Markup, Scenes, session} from "telegraf";
-import {themes} from "./themes.js";
-import { getRandomArbitrary } from "./Utils.js";
+import { Markup, Scenes, session } from 'telegraf';
+import { themes } from './themes.js';
+import { getRandomArbitrary } from './Utils.js';
 
 export const testsScene = new Scenes.BaseScene('tests');
 
@@ -11,7 +11,7 @@ async function getRandomQuestion (ctx) {
   if (session.questionCount >= Count) {
     duplication.length = 0;
 
-    const results = `Ваш результат: ${session.correctAnswersCount}/12 (${(session.correctAnswersCount/12) * 100}%)`;
+    const results = `Ваш результат: ${ session.correctAnswersCount }/12 (${ parseInt((session.correctAnswersCount/12) * 100) }%)`;
     ctx.reply(results);
 
     const text = `Для початку навчання, або перевірки ваших знань з цифровій грамотності, натисність:
@@ -38,14 +38,28 @@ async function getRandomQuestion (ctx) {
   }
 }
 
-async function getThemeQuestion () {
+async function getThemeQuestion (ctx) {
+  const theme = session.index - 1;
 
+  if (session.questionCount >= themes[theme].test.length) {
+    duplication.length = 0;
+
+    const results = `Ваш результат: ${session.correctAnswersCount}/${themes[theme].test.length} (${parseInt((session.correctAnswersCount/themes[theme].test.length) * 100)}%)`;
+    await ctx.reply(results);
+
+    await ctx.scene.enter('subtopics');
+  } else {
+    session.theme = session.index - 1;
+    session.test = session.questionCount;
+    session.questionCount += 1;
+    await ctx.scene.enter('test');
+  }
 }
 
 testsScene.enter(async (ctx) => {
   if (session.index === undefined) {
     await getRandomQuestion(ctx);
   } else {
-
+    await getThemeQuestion(ctx);
   }
 })
